@@ -1,3 +1,18 @@
 #!/usr/bin/env bash
-PROMPT_CONTENT="$(cat "$HOME/claude-pipeline/prompts/pm.md")"
-exec claude --add-dir "$(pwd)" "$PROMPT_CONTENT"
+PROMPT_FILE="$HOME/claude-pipeline/prompts/pm.md"
+
+# 自分の pane_id を取得
+PANE=$(tmux display-message -p '#{pane_id}')
+
+# ❶ claude を起動（標準入力はまだ空）
+claude --add-dir "$(pwd)" &
+
+PID=$!
+sleep 0.2   # プロセスがターミナル制御を取るのを待つ
+
+# ❷ プロンプト全文を tmux バッファに読み込み → 自 pane に貼り付け → Enter
+tmux load-buffer "$PROMPT_FILE"
+tmux paste-buffer -t "$PANE"
+tmux send-keys    -t "$PANE" C-m
+
+wait "$PID"
