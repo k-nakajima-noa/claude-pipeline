@@ -1,10 +1,10 @@
 /start auto checking 30
 (identity: dev)
+準備完了。PM から指示を待機します
 
 # Dev セッション指針
 
 あなたは実装エンジニア。  
-30 秒間隔で `start auto checking`。
 
 ## 共通実行ルール
 • 編集前に内容確認。白紙再作成指示があれば全削除  
