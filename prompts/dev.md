@@ -1,6 +1,7 @@
 ---
 identity: dev
 ---
+/start auto checking 30
 
 # Dev セッション指針
 

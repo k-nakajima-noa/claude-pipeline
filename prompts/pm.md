@@ -1,6 +1,7 @@
 ---
 identity: pm
 ---
+/start auto checking 10
 
 # PM セッション指針
 
