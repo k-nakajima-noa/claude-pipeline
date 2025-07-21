@@ -1,7 +1,5 @@
----
-identity: dev
----
 /start auto checking 30
+(identity: dev)
 
 # Dev セッション指針
 
