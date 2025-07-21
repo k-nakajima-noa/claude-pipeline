@@ -2,17 +2,17 @@
   "mcpServers": {
     "ipc": {
       "command": "npx",
-      "args": [ "-y", "@anthropic-ai/claude-ipc-mcp", "--secret", "$IPC_SHARED_SECRET" ],
+      "args": ["-y", "github:jdez427/claude-ipc-mcp", "--secret", "$IPC_SHARED_SECRET"],
       "env":  { "IPC_SHARED_SECRET": "$IPC_SHARED_SECRET" }
     },
     "cmd": {
       "command": "npx",
-      "args": [ "-y", "@anthropic-ai/mcp-server-command" ],
+      "args": ["-y", "mcp-server-commands"],
       "env":  { "ALLOWED_COMMANDS": "git", "IPC_SHARED_SECRET": "$IPC_SHARED_SECRET" }
     },
     "github": {
       "command": "npx",
-      "args": [ "-y", "@anthropic-ai/mcp-server-github" ],
+      "args": ["-y", "@modelcontextprotocol/server-github"],
       "env":  { "GITHUB_TOKEN": "$GITHUB_TOKEN", "IPC_SHARED_SECRET": "$IPC_SHARED_SECRET" }
     }
   }
