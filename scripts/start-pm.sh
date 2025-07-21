@@ -6,7 +6,7 @@ PANE=$(tmux display-message -p '#{pane_id}')
 
 # ❶ claude を起動（標準入力はまだ空）
 claude --add-dir "$(pwd)" \
-       --ipc-connect "ws://localhost:4780?secret=$IPC_SHARED_SECRET" &
+       --ipc-connect "ws://localhost:9876?secret=$IPC_SHARED_SECRET" &
 
 PID=$!
 sleep 0.3   # プロセスがターミナル制御を取るのを待つ

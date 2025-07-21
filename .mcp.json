@@ -1,10 +1,5 @@
 {
   "mcpServers": {
-    "ipc": {
-      "command": "claude",
-      "args": ["mcp", "serve"],
-      "env":  { "IPC_SHARED_SECRET": "$IPC_SHARED_SECRET" }
-    },
     "cmd": {
       "command": "npx",
       "args": ["-y", "mcp-server-commands"],
