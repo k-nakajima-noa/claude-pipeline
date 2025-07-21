@@ -2,13 +2,14 @@
 PROMPT_FILE="$HOME/claude-pipeline/prompts/dev.md"
 PANE=$(tmux display-message -p '#{pane_id}')
 
-claude --add-dir "$(pwd)" &
+claude --add-dir "$(pwd)" \
+       --ipc-connect "ws://localhost:4780?secret=$IPC_SHARED_SECRET" &
 
 PID=$!
-sleep 0.2
+sleep 0.3
 
 tmux load-buffer "$PROMPT_FILE"
 tmux paste-buffer -t "$PANE"
-tmux send-keys    -t "$PANE" C-m
+tmux send-keys    -t "$PANE" C-m C-m
 
 wait "$PID"

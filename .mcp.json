@@ -1,18 +1,7 @@
 {
   "mcpServers": {
-    "ipc": {
-      "command": "npx",
-      "args": ["-y", "claude-ipc-mcp"]
-    },
-    "cmd": {
-      "command": "npx",
-      "args": ["-y", "command-executor-mcp-server"],
-      "env": { "ALLOWED_COMMANDS": "git" }
-    },
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": { "GITHUB_TOKEN": "$env:GITHUB_TOKEN" }
-    }
+    "ipc":    { "command": "npx", "args": ["-y","claude-ipc-mcp","--secret","$IPC_SHARED_SECRET"] },
+    "cmd":    { "command": "npx", "args": ["-y","command-executor-mcp-server"], "env":{ "ALLOWED_COMMANDS":"git" } },
+    "github": { "command": "npx", "args": ["-y","@modelcontextprotocol/server-github"], "env":{ "GITHUB_TOKEN":"$GITHUB_TOKEN" } }
   }
 }
