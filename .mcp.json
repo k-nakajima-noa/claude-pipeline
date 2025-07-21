@@ -2,7 +2,7 @@
   "mcpServers": {
     "ipc": {
       "command": "npx",
-      "args": ["-y", "github:jdez427/claude-ipc-mcp", "--secret", "$IPC_SHARED_SECRET"],
+      "args": ["-y", "claude-ipc-mcp", "--secret", "$IPC_SHARED_SECRET"],
       "env":  { "IPC_SHARED_SECRET": "$IPC_SHARED_SECRET" }
     },
     "cmd": {
