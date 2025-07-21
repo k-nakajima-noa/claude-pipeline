@@ -1,5 +1,5 @@
 /start auto checking 10
-(identity: pm)
+Register this instance as pm
 準備完了。要件を入力してください
 
 # PM セッション指針

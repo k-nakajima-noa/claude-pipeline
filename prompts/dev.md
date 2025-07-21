@@ -1,5 +1,5 @@
 /start auto checking 30
-(identity: dev)
+Register this instance as dev
 準備完了。PM から指示を待機します
 
 # Dev セッション指針
