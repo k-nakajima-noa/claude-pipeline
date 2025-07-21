@@ -2,8 +2,8 @@
 PROMPT_FILE="$HOME/claude-pipeline/prompts/dev.md"
 PANE=$(tmux display-message -p '#{pane_id}')
 
-claude --add-dir "$(pwd)" \
-       --ipc-connect "ws://localhost:9876?secret=$IPC_SHARED_SECRET" &
+CLAUDE_MCP_UPSTREAM="ws://127.0.0.1:9876?secret=$IPC_SHARED_SECRET" \
+claude --add-dir "$(pwd)" &
 
 PID=$!
 sleep 0.3

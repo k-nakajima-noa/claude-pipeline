@@ -5,4 +5,4 @@ tmux has-session -t mcp 2>/dev/null && tmux kill-session -t mcp
 tmux new-session -ds mcp \
   "uvx --from ~/.claude-ipc-mcp claude-ipc-mcp --secret ${IPC_SHARED_SECRET}"
 echo "🚀 MCP サーバー群を tmux セッション[mcp] で起動しました"
-echo "   --ipc-connect ws://localhost:4780?secret=${IPC_SHARED_SECRET}"
+echo "   --ipc-connect ws://localhost:9876?secret=${IPC_SHARED_SECRET}"
