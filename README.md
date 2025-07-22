@@ -19,10 +19,9 @@ claude-pipeline/
 │  ├─ pm.md          # PM 指針 + 登録行
 │  └─ dev.md         # Dev 指針 + 登録行
 ├─ scripts/
-│  ├─ setup-mcp.sh   # 初回のみ
-│  ├─ start-mcp.sh   # MCP ハブ常駐 (tmux\:mcp)
-│  ├─ start-pm.sh    # PM セッション
-│  └─ start-dev.sh   # Dev セッション
+│  ├─ setup-mcp.sh     # 初回のみ
+│  ├─ start-mcp.sh     # MCP ハブ常駐 (tmux\:mcp)
+│  └─ start-claude.sh  # PM/Dev セッション一括起動
 └─ README.md         # ← (このファイル)
 ````
 
@@ -52,9 +51,7 @@ bash ~/claude-pipeline/scripts/start-mcp.sh # tmux セッション[mcp]
 
 # (B) プロジェクト側で PM / Dev
 cd ~/projects/your-repo
-tmux new  -s claude -d ~/claude-pipeline/scripts/start-pm.sh
-tmux splitw -v ~/claude-pipeline/scripts/start-dev.sh
-tmux attach -t claude
+bash ~/claude-pipeline/scripts/start-claude.sh
 ```
 
 | ペイン     | 内容                                          |
@@ -71,19 +68,19 @@ tmux attach -t claude
 
 | ファイル                           | 役割                                                   | 主な実装ポイント                                                            |
 | ------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------- |
-| **setup-mcp.sh**               | claude‑ipc‑mcp clone / uv sync / mcp add 登録を一括       | idempotent（再実行安全）                                                   |
-| **start‑mcp.sh**               | `uvx … claude-ipc-mcp --port 9876` を tmux\[mcp] で常駐  | `CI=1` 不要（mcp は Ink を使わない）                                          |
-| **start‑pm.sh / start‑dev.sh** | `script -c "claude … \"$PROMPT\""` で PTY & 初期プロンプト渡し | `CLAUDE_MCP_UPSTREAM=ws://127.0.0.1:9876?secret=$IPC_SHARED_SECRET` |
+| **setup-mcp.sh**     | claude‑ipc‑mcp clone / uv sync / mcp add 登録を一括       | idempotent（再実行安全）                                                   |
+| **start‑mcp.sh**     | `uvx … claude-ipc-mcp --port 9876` を tmux\[mcp] で常駐  |                                    |
+| **start‑claude.sh**  | tmux水平分割でPM/Devを起動、初期プロンプト自動送信           | `CLAUDE_MCP_UPSTREAM=ws://127.0.0.1:9876?secret=$IPC_SHARED_SECRET` |
 
 ---
 
 ## 6. よくあるエラーと対処
 
-| 症状                                            | 原因                      | 対処                                                      |                       |
-| --------------------------------------------- | ----------------------- | ------------------------------------------------------- | --------------------- |
-| `Raw mode is not supported …`                 | stdin が非 TTY            | `script -c …` で PTY を確保                                 |                       |
-| `Message queued for dev (not yet registered)` | Dev が未登録                | prompts/dev.md 冒頭に `Register this instance as dev` を入れる |                       |
-| `Input must be provided … --print`            | stdout がパイプ → print モード | \`                                                      | cat\` を削除。プロンプトは引数で渡す |
+| 症状                                            | 原因                      | 対処                                                      |
+| --------------------------------------------- | ----------------------- | ------------------------------------------------------- |
+| `Raw mode is not supported …`                 | stdin が非 TTY            | `tmux send-keys` で直接入力送信                             |
+| `Message queued for dev (not yet registered)` | Dev が未登録                | prompts/dev.md 冒頭に `Register this instance as dev` を入れる |
+| tmux セッションが既に存在                          | 前回セッションが残存            | `tmux kill-session -t claude` で削除してから再実行           |
 
 ---
 
