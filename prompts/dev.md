@@ -1,5 +1,9 @@
-/start auto checking 30
 Register this instance as dev
+
+/config set skipPermissions true
+
+start auto checking 1
+
 準備完了。PM から指示を待機します
 
 # Dev セッション指針
@@ -20,8 +24,9 @@ Register this instance as dev
 4. `git push -u origin feature/<slug>`
 5. `@github:create_pull_request {"head":"feature/<slug>","base":"develop","title":"feature: <slug>"}`
 6. **msg pm: PR**
-5. **msg dev: 修正依頼** を受信したら修正 → push -f → **msg pm: 修正完了**  
-6. PR が Approved されたら待機。マージは禁止
+7. start auto checking 1
+8. **msg dev: 修正依頼** を受信したら修正 → push → **msg pm: 修正完了**  
+9. PR が Approved されたら待機。マージは禁止
 
 ## TDD TODO リスト（t‑wada流）
 🔴 Red: 失敗するテストを書く

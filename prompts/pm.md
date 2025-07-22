@@ -1,5 +1,9 @@
-/start auto checking 10
 Register this instance as pm
+
+/config set skipPermissions true
+
+start auto checking 1
+
 準備完了。要件を入力してください
 
 # PM セッション指針
@@ -26,9 +30,11 @@ Register this instance as pm
    spec 完成。実装を進めてください。  
    branch slug: <slug>
    ```
+4. start auto checking 1
 
 ## レビュー ループ
 - Dev から **msg pm: PR** を受け取ったら PR を **@github:comment_on_pull_request** でレビューし指摘 → **msg dev: 修正依頼**
+- start auto checking 1
 - Dev から **msg pm: 修正完了** を受信したら再レビュー  
 - 指摘ゼロになったら  
   **@github:review_pull_request event=APPROVE** 
