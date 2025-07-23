@@ -9,9 +9,24 @@ PROMPT_PM="$CLAUDE_PIPELINE_ROOT/prompts/pm.md"
 PROMPT_DEV="$CLAUDE_PIPELINE_ROOT/prompts/dev.md"
 
 # Claude CLI 実行ディレクトリ（＝現在の開発リポジトリ）
-TARGET_REPO_PATH="$(pwd)"
-CLAUDE_CMD="claude --add-dir $TARGET_REPO_PATH"
+MAIN_REPO="$(pwd)"                           # ← 人間が触るツリー
+WORKTREE_DIR="$MAIN_REPO-claude"             # ← Claude 用ツリー
 
+# ────────────────────────────────
+# 🛠  2. ワークツリーを用意
+# ────────────────────────────────
+if [ ! -d "$WORKTREE_DIR/.git" ]; then
+  # 既に登録されているか確認
+  if ! git -C "$MAIN_REPO" worktree list | grep -q "$WORKTREE_DIR"; then
+    echo "[setup] adding git worktree: $WORKTREE_DIR"
+    git -C "$MAIN_REPO" worktree add "$WORKTREE_DIR" develop   # develop ブランチを想定
+  fi
+fi
+
+# ────────────────────────────────
+# 🚀  3. Claude CLI コマンド
+# ────────────────────────────────
+CLAUDE_CMD="cd $WORKTREE_DIR && claude"
 SESSION="claude"
 
 # Claude CLI用 環境変数（必要に応じて .env 読み込みしても良い）
@@ -29,8 +44,8 @@ tmux split-window -h -t "$SESSION:0" "$CLAUDE_CMD"
 
 sleep 1  # Claude CLI 起動待ち
 
-tmux send-keys -t "$SESSION:0.0" "$(cat "$PROMPT_PM")" C-m
-tmux send-keys -t "$SESSION:0.1" "$(cat "$PROMPT_DEV")" C-m
+tmux send-keys -t "$SESSION:0.0" "$(cat "$PROMPT_PM")" C-m C-m
+tmux send-keys -t "$SESSION:0.1" "$(cat "$PROMPT_DEV")" C-m C-m
 
 # ========== 🪟 セッション表示 ==========
 

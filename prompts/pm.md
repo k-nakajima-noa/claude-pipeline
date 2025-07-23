@@ -2,7 +2,7 @@ Register this instance as pm
 
 /config set skipPermissions true
 
-start auto checking 1
+Every 30 seconds, explicitly check the MCP queue for new messages and act on them immediately.
 
 準備完了。要件を入力してください
 
